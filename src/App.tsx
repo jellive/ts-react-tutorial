@@ -3,6 +3,7 @@ import Greetings from './Greetings'
 import Counter from './Counter'
 import MyForm from './MyForm'
 import ReducerSample from './ReducerSample'
+import { SampleProvider } from './SampleContext';
 
 const App: React.FC = () => {
   const onClick = (name: string) => {
@@ -18,7 +19,9 @@ const App: React.FC = () => {
     <Counter/>
     <MyForm onSubmit={onSubmit}/> */}
     {/* <Counter/> */}
-    <ReducerSample/>
+    <SampleProvider>
+      <ReducerSample/>
+    </SampleProvider>
     </>
   );
 }
