@@ -39,7 +39,7 @@ const App: React.FC = () => {
     <div style={style}>{name}</div>
     <div className="gray-box"/>
     <Wrapper>
-      <Hello name="react" color="red"/>
+      <Hello name="react" color="red" isSpecial/>
       <Hello color="pink"/>
     </Wrapper>
     </>
