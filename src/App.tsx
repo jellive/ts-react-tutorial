@@ -7,6 +7,7 @@ import { SampleProvider } from './SampleContext';
 import './App.css'
 import Hello from './Hello'
 import Wrapper from './Wrapper'
+import Counter_State from './Counter_State'
 
 const App: React.FC = () => {
   const onClick = (name: string) => {
@@ -26,22 +27,23 @@ const App: React.FC = () => {
   }
   return (
     <>
-    {/* <Greetings name="hihi" onClick={onClick}/>
-    <Counter/>
-    <MyForm onSubmit={onSubmit}/> */}
-    {/* <Counter/> */}
-    <SampleProvider>
-      <ReducerSample/>
-    </SampleProvider>
+      {/* <Greetings name="hihi" onClick={onClick}/>
+      <Counter/>
+      <MyForm onSubmit={onSubmit}/> */}
+      {/* <Counter/> */}
+      <SampleProvider>
+        <ReducerSample/>
+      </SampleProvider>
 
-    {/* JS 시작 */}
-    <div>안녕하세요</div>
-    <div style={style}>{name}</div>
-    <div className="gray-box"/>
-    <Wrapper>
-      <Hello name="react" color="red" isSpecial/>
-      <Hello color="pink"/>
-    </Wrapper>
+      {/* JS 시작 */}
+      <div>안녕하세요</div>
+      <div style={style}>{name}</div>
+      <div className="gray-box"/>
+      <Wrapper>
+        <Hello name="react" color="red" isSpecial/>
+        <Hello color="pink"/>
+      </Wrapper>
+      <Counter_State/>
     </>
   );
 }
