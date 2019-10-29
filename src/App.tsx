@@ -8,6 +8,7 @@ import './App.css'
 import Hello from './Hello'
 import Wrapper from './Wrapper'
 import Counter_State from './Counter_State'
+import InputSample from './InputSample'
 
 const App: React.FC = () => {
   const onClick = (name: string) => {
@@ -44,6 +45,7 @@ const App: React.FC = () => {
         <Hello color="pink"/>
       </Wrapper>
       <Counter_State/>
+      <InputSample/>
     </>
   );
 }
