@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 function InputSample() {
     const [inputs, setInputs] = useState({
         name: '',
         nickname: ''
     })
+    const nameInput = useRef()
 
     const { name, nickname } = inputs
 
@@ -22,6 +23,7 @@ function InputSample() {
             name: '',
             nickname: ''
         })
+        nameInput.current && (nameInput as any).current.focus()
     }
 
     return (
