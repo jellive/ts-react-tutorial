@@ -4,6 +4,9 @@ import Counter from './Counter'
 import MyForm from './MyForm'
 import ReducerSample from './ReducerSample'
 import { SampleProvider } from './SampleContext';
+import './App.css'
+import Hello from './Hello'
+import Wrapper from './Wrapper'
 
 const App: React.FC = () => {
   const onClick = (name: string) => {
@@ -12,6 +15,14 @@ const App: React.FC = () => {
 
   const onSubmit = (form: {name: string, description: string}) => {
     console.log(form)
+  }
+
+  const name = 'react'
+  const style = {
+    backgroundColor: 'black',
+    color: 'aqua',
+    fontSize: 24,
+    padding: '1rem'
   }
   return (
     <>
@@ -22,6 +33,15 @@ const App: React.FC = () => {
     <SampleProvider>
       <ReducerSample/>
     </SampleProvider>
+
+    {/* JS 시작 */}
+    <div>안녕하세요</div>
+    <div style={style}>{name}</div>
+    <div className="gray-box"/>
+    <Wrapper>
+      <Hello name="react" color="red"/>
+      <Hello color="pink"/>
+    </Wrapper>
     </>
   );
 }
