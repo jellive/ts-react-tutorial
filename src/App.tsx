@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Greetings from './Greetings'
 import Counter from './Counter'
 import MyForm from './MyForm'
@@ -20,13 +20,37 @@ const App: React.FC = () => {
     console.log(form)
   }
 
-  const name = 'react'
-  const style = {
-    backgroundColor: 'black',
-    color: 'aqua',
-    fontSize: 24,
-    padding: '1rem'
+  const users = [
+    {
+        id: 1,
+        username: 'velopert',
+        email: 'public.velopert@gmail.com'
+    },
+    {
+        id: 2,
+        username: 'tester',
+        email: 'tester@example.com'
+    },
+    {
+        id: 3,
+        username: 'liz',
+        email: 'liz@example.com'
+    }
+  ]
+
+  const nextId = useRef(4)
+  const onCreate = () => {
+
+    nextId.current += 1
   }
+
+  // const name = 'react'
+  // const style = {
+  //   backgroundColor: 'black',
+  //   color: 'aqua',
+  //   fontSize: 24,
+  //   padding: '1rem'
+  // }
   return (
     <>
       {/* <Greetings name="hihi" onClick={onClick}/>
@@ -47,7 +71,7 @@ const App: React.FC = () => {
       </Wrapper>
       <Counter_State/>
       <InputSample/> */}
-      <UserList/>
+      <UserList users={users}/>
     </>
   );
 }
