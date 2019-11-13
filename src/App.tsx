@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, SyntheticEvent } from 'react';
 import Greetings from './Greetings'
 import Counter from './Counter'
 import MyForm from './MyForm'
@@ -10,17 +10,35 @@ import Wrapper from './Wrapper'
 import Counter_State from './Counter_State'
 import InputSample from './InputSample'
 import UserList from './UserList'
+import CreateUser from './CreateUser'
 
 const App: React.FC = () => {
-  const onClick = (name: string) => {
-    console.log(name)
+  // const onClick = (name: string) => {
+  //   console.log(name)
+  // }
+
+  // const onSubmit = (form: {name: string, description: string}) => {
+  //   console.log(form)
+  // }
+
+  const [inputs, setInputs] = useState({
+    username: '',
+    email: ''
+  })
+
+  const { username, email } = inputs
+  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+    if (e.target) {
+      const { name, value } = e.currentTarget
+      console.log(name, value)
+      setInputs({
+        ...inputs,
+        [name]: value
+      })
+    }
   }
 
-  const onSubmit = (form: {name: string, description: string}) => {
-    console.log(form)
-  }
-
-  const users = [
+  const [users, setUsers] = useState([
     {
         id: 1,
         username: 'velopert',
@@ -36,11 +54,22 @@ const App: React.FC = () => {
         username: 'liz',
         email: 'liz@example.com'
     }
-  ]
+  ])
 
   const nextId = useRef(4)
   const onCreate = () => {
+    const user = {
+      id: nextId.current,
+      username,
+      email
+    }
 
+    setUsers([...users, user])
+    
+    setInputs({
+      username: '',
+      'email': ''
+    })
     nextId.current += 1
   }
 
@@ -71,6 +100,13 @@ const App: React.FC = () => {
       </Wrapper>
       <Counter_State/>
       <InputSample/> */}
+
+      <CreateUser
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
       <UserList users={users}/>
     </>
   );
