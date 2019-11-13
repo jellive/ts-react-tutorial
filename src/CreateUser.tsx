@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react'
+import React from 'react'
 
 function CreateUser({ username, email, onChange, onCreate }: {username: string, email: string, onChange: (e: React.FormEvent<HTMLInputElement>) => void, onCreate: () => void}) {
     return (
