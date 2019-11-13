@@ -80,6 +80,9 @@ const App: React.FC = () => {
   //   fontSize: 24,
   //   padding: '1rem'
   // }
+  const onRemove = (id: number) => {
+    setUsers(users.filter(user => user.id !== id))
+  }
   return (
     <>
       {/* <Greetings name="hihi" onClick={onClick}/>
@@ -107,7 +110,8 @@ const App: React.FC = () => {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users}/>
+      <UserList users={users}
+        onRemove={onRemove}/>
     </>
   );
 }
