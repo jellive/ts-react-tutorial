@@ -1,4 +1,4 @@
-import React, { useRef, useState, SyntheticEvent } from 'react';
+import React, { useRef, useState } from 'react';
 import Greetings from './Greetings'
 import Counter from './Counter'
 import MyForm from './MyForm'
@@ -64,8 +64,8 @@ const App: React.FC = () => {
       email
     }
 
-    setUsers([...users, user])
-    
+    setUsers(users.concat(user))
+
     setInputs({
       username: '',
       'email': ''
