@@ -2,6 +2,7 @@ import React, { useRef, useCallback, useReducer, useMemo } from 'react';
 import './App.css'
 import UserList from './UserList'
 import CreateUser from './CreateUser'
+import useInputs from './hooks/useInputs'
 
 const countActiveUsers = (users: {
   id: number;
@@ -53,14 +54,6 @@ function reducer(state: {
   }[]
 }, action: any) {
   switch (action.type) {
-    case 'CHANGE_INPUT':
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.name]: action.value
-        }
-      };
     case 'CREATE_USER':
       return {
         inputs: initialState.inputs,
@@ -83,23 +76,14 @@ function reducer(state: {
 }
 
 const App: React.FC = () => {
+  const [{username, email}, onChange, reset] = useInputs({
+    username: '',
+    email: ''
+  })
   const [state, dispatch] = useReducer(reducer, initialState);
   const nextId = useRef(4)
 
   const { users } = state;
-  const { username, email } = state.inputs;
-
-  const onChange = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      const { name, value } = e.currentTarget
-      dispatch({
-        type: 'CHANGE_INPUT',
-        name,
-        value
-      })
-    },
-    [],
-  )
 
   const onCreate = useCallback(
     () => {
