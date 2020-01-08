@@ -3,7 +3,7 @@ import { UserDispatch } from './AppReducer'
 import useInputs from './hooks/useInputs'
 
 function CreateUser() {
-    const [{ username, email }, onChange, onReset] = useInputs({
+    const [{ username, email }, onChange, reset] = useInputs({
         username: '',
         email: ''
     })
@@ -31,6 +31,7 @@ function CreateUser() {
                         email
                     }
                 })
+                reset()
                 nextId.current += 1
             }}>등록</button>
         </div>
