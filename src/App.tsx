@@ -22,15 +22,13 @@ const App: React.FC = () => {
   const { username, email } = inputs
   const onChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
-      if (e.target) {
         const { name, value } = e.currentTarget
-        setInputs({
+        setInputs(inputs => ({ // 함수형 업데이트로 리렌더링 방지.
           ...inputs,
           [name]: value
-        })
-      }
+        }))
     },
-    [inputs]
+    []
   )
 
   const [users, setUsers] = useState([
@@ -63,7 +61,7 @@ const App: React.FC = () => {
         email,
         active: false
       }
-      setUsers(users.concat(user))
+      setUsers(users => users.concat(user))
   
       setInputs({
         username: '',
@@ -71,19 +69,19 @@ const App: React.FC = () => {
       })
       nextId.current += 1
     },
-    [users, username, email]) 
+    [username, email]) 
 
 
   const onRemove = useCallback((id: number) => {
-    setUsers(users.filter(user => user.id !== id))
-  }, [users])
+    setUsers(users => users.filter(user => user.id !== id))
+  }, [])
   const onToggle = useCallback((id: number) => {
-    setUsers(
+    setUsers(users =>
       users.map(user =>
         user.id === id ? { ...user, active: !user.active } : user
       )
     )
-  }, [users])
+  }, [])
   const count = useMemo(() => countActiveUsers(users), [users])
   return (
     <>

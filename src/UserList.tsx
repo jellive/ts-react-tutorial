@@ -27,4 +27,4 @@ function UserList({ users, onRemove, onToggle }: any) {
     )
 }
 
-export default UserList
+export default React.memo(UserList)
