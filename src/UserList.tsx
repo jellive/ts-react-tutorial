@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { UserDispatch } from './AppReducer'
 
-function User({ user, onRemove, onToggle }: any) {
+const User = React.memo(function ({ user }: any) {
     useEffect(() => {
         console.log('user 값이 설정됨')
         console.log(user)
@@ -9,19 +10,26 @@ function User({ user, onRemove, onToggle }: any) {
             console.log(user)
         }
     }, [user]) // 두 번째 [user] 를 deps 라고 한다. 이게 없을 때에는 컴포넌트가 처음 나타날 때에만 호출된다. 있으면 바뀔 때마다 호출 됨.
+
+    const dispatch = useContext(UserDispatch)
+
     return (
         <div>
-            <b style={{ cursor: 'pointer', color: user.active ? 'green' : 'black' }} onClick={() => onToggle(user.id)}>{user.username}</b> <span>({user.email})</span>
-            <button onClick={() => onRemove(user.id)}>삭제</button>
+            <b style={{ cursor: 'pointer', color: user.active ? 'green' : 'black' }}
+                onClick={() => { dispatch({ type: 'TOGGLE_USER', id: user.id }) }}
+            >{user.username}</b> <span>({user.email})</span>
+            <button onClick={() => {
+                dispatch({ type: 'REMOVE_USER', id: user.id })
+            }}>삭제</button>
         </div>
     )
-}
+})
 
-function UserList({ users, onRemove, onToggle }: any) {
+function UserList({ users }: any) {
     return (
         <div>
             {users.map((user: any) => (
-                <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} />
+                <User user={user} key={user.id} />
             ))}
         </div>
     )
