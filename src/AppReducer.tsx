@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useReducer, useMemo } from 'react';
+import React, {  useCallback, useReducer, useMemo } from 'react';
 import './App.css'
 import UserList from './UserList'
 import CreateUser from './CreateUser'
@@ -79,36 +79,31 @@ let context: any = null
 export const UserDispatch = React.createContext(context)
 
 const App: React.FC = () => {
-  const [{username, email}, onChange, onReset] = useInputs({
-    username: '',
-    email: ''
-  })
   const [state, dispatch] = useReducer(reducer, initialState);
-  const nextId = useRef(4)
 
   const { users } = state;
 
-  const onCreate = useCallback(
-    () => {
-      dispatch({
-        type: 'CREATE_USER',
-        user: {
-          id: nextId.current,
-          username,
-          email
-        }
-      })
-      nextId.current += 1
-    },
-    [username, email]
-  )
+  // const onCreate = useCallback(
+  //   () => {
+  //     dispatch({
+  //       type: 'CREATE_USER',
+  //       user: {
+  //         id: nextId.current,
+  //         username,
+  //         email
+  //       }
+  //     })
+  //     nextId.current += 1
+  //   },
+  //   [username, email]
+  // )
 
   const count = useMemo(() => countActiveUsers(users), [users])
   return (
     <UserDispatch.Provider value={dispatch}>
-      <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />
+      <CreateUser />
       <UserList users={users} />
-    <div>활성사용자 수 : {count}</div>
+      <div>활성사용자 수 : {count}</div>
     </UserDispatch.Provider>
   );
 }

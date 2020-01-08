@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useContext, useRef } from 'react'
+import { UserDispatch } from './AppReducer'
+import useInputs from './hooks/useInputs'
 
-function CreateUser({ username, email, onChange, onCreate }: {username: string, email: string, onChange?: (e: React.FormEvent<HTMLInputElement>) => void, onCreate?: () => void}) {
+function CreateUser() {
+    const [{ username, email }, onChange, onReset] = useInputs({
+        username: '',
+        email: ''
+    })
+    const dispatch = useContext(UserDispatch)
+    const nextId = useRef(4)
     return (
         <div>
             <input
@@ -15,7 +23,16 @@ function CreateUser({ username, email, onChange, onCreate }: {username: string, 
                 onChange={onChange}
                 value={email}
             />
-            <button onClick={onCreate}>등록</button>
+            <button onClick={() => {
+                dispatch({
+                    type: 'CREATE_USER', user: {
+                        id: nextId.current,
+                        username,
+                        email
+                    }
+                })
+                nextId.current += 1
+            }}>등록</button>
         </div>
     )
 }

@@ -86,10 +86,10 @@ const App: React.FC = () => {
   return (
     <>
       <CreateUser
-        username={username}
-        email={email}
-        onChange={onChange}
-        onCreate={onCreate}
+        // username={username}
+        // email={email}
+        // onChange={onChange}
+        // onCreate={onCreate}
       />
       <UserList users={users}
         onRemove={onRemove}
