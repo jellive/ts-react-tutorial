@@ -1,7 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import './App.css'
 import UserList from './UserList'
 import CreateUser from './CreateUser'
+
+const countActiveUsers = (users: {
+  id: number;
+  username: string;
+  email: string;
+  active: boolean;
+}[]) => {
+  console.log('활성 사용자 사룰 세는 중...')
+  return users.filter(user => user.active).length
+}
 
 const App: React.FC = () => {
   const [inputs, setInputs] = useState({
@@ -13,7 +23,6 @@ const App: React.FC = () => {
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.target) {
       const { name, value } = e.currentTarget
-      console.log(name, value)
       setInputs({
         ...inputs,
         [name]: value
@@ -23,22 +32,22 @@ const App: React.FC = () => {
 
   const [users, setUsers] = useState([
     {
-        id: 1,
-        username: 'velopert',
-        email: 'public.velopert@gmail.com',
-        active: true
+      id: 1,
+      username: 'velopert',
+      email: 'public.velopert@gmail.com',
+      active: true
     },
     {
-        id: 2,
-        username: 'tester',
-        email: 'tester@example.com',
-        active: false
+      id: 2,
+      username: 'tester',
+      email: 'tester@example.com',
+      active: false
     },
     {
-        id: 3,
-        username: 'liz',
-        email: 'liz@example.com',
-        active: false
+      id: 3,
+      username: 'liz',
+      email: 'liz@example.com',
+      active: false
     }
   ])
 
@@ -65,11 +74,12 @@ const App: React.FC = () => {
   }
   const onToggle = (id: number) => {
     setUsers(
-      users.map(user => 
+      users.map(user =>
         user.id === id ? { ...user, active: !user.active } : user
       )
     )
   }
+  const count = useMemo(() => countActiveUsers(users), [users])
   return (
     <>
       <CreateUser
@@ -81,7 +91,8 @@ const App: React.FC = () => {
       <UserList users={users}
         onRemove={onRemove}
         onToggle={onToggle}
-        />
+      />
+      <div>활성 사용자 수 : {count}</div>
     </>
   );
 }

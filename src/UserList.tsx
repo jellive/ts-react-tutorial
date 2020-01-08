@@ -18,7 +18,6 @@ function User({ user, onRemove, onToggle }: any) {
 }
 
 function UserList({ users, onRemove, onToggle }: any) {
-
     return (
         <div>
             {users.map((user: any) => (
