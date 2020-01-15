@@ -1,16 +1,19 @@
-import React, {  useCallback, useReducer, useMemo } from 'react';
-import './App.css'
+import React, { useCallback, useReducer, useMemo } from 'react';
+import produce, { Draft } from 'immer'
+// import './App.css'
 import UserList from './UserList'
 import CreateUser from './CreateUser'
-import useInputs from './hooks/useInputs'
+// import useInputs from './hooks/useInputs'
 
-const countActiveUsers = (users: {
-  id: number;
-  username: string;
-  email: string;
-  active: boolean;
-}[]) => {
-  console.log('활성 사용자 사룰 세는 중...')
+interface User {
+  id: number,
+  username: string,
+  email: string,
+  active: boolean
+}
+
+const countActiveUsers = (users: User[]) => {
+  console.log('활성 사용자 수를 세는 중...')
   return users.filter(user => user.active).length
 }
 
@@ -46,32 +49,25 @@ function reducer(state: {
     username: string,
     email: string
   },
-  users: {
-    id: number,
-    username: string,
-    email: string,
-    active: boolean
-  }[]
+  users: User[]
 }, action: any) {
   switch (action.type) {
     case 'CREATE_USER':
-      return {
-        inputs: initialState.inputs,
-        users: state.users.concat(action.user)
-      }
+      return produce(state, (draft: Draft) => {
+        draft.users.push(action.user)
+      })
     case 'TOGGLE_USER':
-      return {
-        ...state,
-        users: state.users.map(user =>
-          user.id === action.id ? { ...user, active: !user.active } : user)
-      }
+      return produce(state, (draft: Draft) => {
+        const user = draft.users.find((user: User) => user.id === action.id)
+        user.active = !user.active
+      })
     case 'REMOVE_USER':
-      return {
-        ...state,
-        users: state.users.filter(user => user.id !== action.id)
-      }
+      return produce(state, (draft: Draft) => {
+        const index = draft.users.findIndex((user: User) => user.id === action.id)
+        draft.users.splice(index, 1)
+      })
     default:
-      return state;
+      return state
   }
 }
 
@@ -82,21 +78,6 @@ const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { users } = state;
-
-  // const onCreate = useCallback(
-  //   () => {
-  //     dispatch({
-  //       type: 'CREATE_USER',
-  //       user: {
-  //         id: nextId.current,
-  //         username,
-  //         email
-  //       }
-  //     })
-  //     nextId.current += 1
-  //   },
-  //   [username, email]
-  // )
 
   const count = useMemo(() => countActiveUsers(users), [users])
   return (
