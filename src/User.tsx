@@ -9,7 +9,7 @@ interface Props {
   user: UserType
 }
 
-const User = ({user}: Props) => {
+const User = ({ user }: Props) => {
   return (
     <div>
       <div>
@@ -18,7 +18,7 @@ const User = ({user}: Props) => {
       <div>
         <b>Useername</b>: {user.name}
       </div>
-      <button onClick={methodDoesNotExist}>Break the world</button>
+
     </div>
   )
 }
